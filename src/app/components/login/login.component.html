@@ -1,0 +1,31 @@
+<section class="py-5 px-4 bg-dark text-white">
+    <div class="cotainer">
+        <h2 class="h3 fw-bold text-center mb-4">Register Now</h2>
+        <div class="login-field">
+            <form [formGroup] = "loginForm" (ngSubmit) ="login()">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input id="username" class="form-control" 
+                    formControlName="username" 
+                    placeholder="Username" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input id="password" class="form-control" [type]="text ? 'text' : 'password'" formControlName="password"
+                        placeholder="Password" />
+                </div>
+                <div class="form-check">
+                    <input id="showPassword" type="checkbox" class="form-check-input" (change)="showPassword()">
+                    <label for="showPassword" class="form-check-label">Show Password</label>
+                </div>  
+                <br/>
+                <div>
+                    <button type="submit" class="btn btn-warning" 
+                    [disabled] = "loginForm.invalid">Login</button>
+                </div>
+                <br />
+                <div><a href="/register" class="text-primary">Please register</a></div>
+            </form>
+        </div>
+    </div>
+</section>
