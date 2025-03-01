@@ -12,6 +12,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor.interceptor';
+import { BmiComponent } from './components/bmi/bmi.component';
+import { ViewScheduleComponent } from './components/view-schedule/view-schedule.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { AuthInterceptor } from './auth/auth-interceptor.interceptor';
     LandingPageComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    BmiComponent,
+    ViewScheduleComponent
   ],
   imports: [
     BrowserModule,

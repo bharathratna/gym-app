@@ -1,54 +1,85 @@
 <section id="register" class="py-5 px-4 bg-dark text-white">
-  <h2 class="h3 fw-bold text-center mb-4">Register Now</h2>
-  <div class="cotainer">
-     <div  class="register">
-      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="bg-secondary p-4 rounded">
-          <div class="mb-3">
-              <label for="field1" class="form-label">Name:</label>
-              <input id="field1" class="form-control" formControlName="name" />
-              <div *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched" class="text-danger">
-                  Name is Required
-              </div>
-          </div>
-          <div class="mb-3">
-              <label for="field2" class="form-label">Mobile No:</label>
-              <input id="field2" class="form-control" formControlName="mobile" />
-              <div *ngIf="formGroup.controls['mobile'].invalid && formGroup.controls['mobile'].touched" class="text-danger">
-                  <div *ngIf="formGroup.controls['mobile'].errors?.['required']">Phone number is required.</div>
-                  <div *ngIf="formGroup.controls['mobile'].errors?.['pattern']">Enter a valid phone number.</div>
-              </div>
-          </div>
-          <div class="mb-3">
-              <label for="field5" class="form-label">Age:</label>
-              <input id="field5" class="form-control" formControlName="age" />
-              <div *ngIf="formGroup.controls['age'].invalid && formGroup.controls['age'].touched" class="text-danger">
-                  Age is Required
-              </div>
-          </div>
-          <div class="mb-3">
-              <label for="field3" class="form-label">Weight:</label>
-              <input id="field3" class="form-control" formControlName="weight" />
-              <div *ngIf="formGroup.controls['weight'].invalid && formGroup.controls['weight'].touched" class="text-danger">
-                  Weight is Required
-              </div>
-          </div>
-          <div class="mb-3">
-              <label for="field4" class="form-label">Height:</label>
-              <input id="field4" class="form-control" formControlName="height" />
-              <div *ngIf="formGroup.controls['height'].invalid && formGroup.controls['height'].touched" class="text-danger">
-                  Height is Required
-              </div>
-          </div>
-          <div class="mb-3 text-center">
-              <button *ngIf="formGroup.controls['height'].valid && formGroup.controls['weight'].valid" class="btn btn-warning" type="button" (click)="onCalculate()">CALCULATE</button>
-          </div>
-          <div *ngIf="bmi !== 0" class="mb-3">
-              <input id="bmi" class="form-control" formControlName="bodyBmi" readonly />
-          </div>
-          <div class="text-center">
-              <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid">Submit</button>
-          </div>
-      </form>
-     </div>
-  </div>
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 start-50 p-3">
+      <div #toastElement class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+        <div class="toast-header">
+          <strong class="me-auto">Fitzone</strong>
+          <small class="text-muted">Registeration</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+         <p *ngIf="registerId !== 0" class ="text-black"> You are register successfully, Your Member Id is <b>{{registerId}}</b> </p>
+         <p *ngIf="user"  class ="text-black"> User Already Present, Please login!!</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="h3 fw-bold text-center mb-4">Register Now</h2>
+    <div class="container">
+        <div class="register">
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="bg-secondary p-4 rounded">
+                <div class="mb-3">
+                    <label for="field1" class="form-label">Name:</label>
+                    <input id="field1" class="form-control" formControlName="name" />
+                    <div *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
+                        class="text-white">
+                        Name is Required
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="field2" class="form-label">Mobile No:</label>
+                    <input id="field2" class="form-control" formControlName="mobile" (blur) = "checkMobile()"/>
+                    <div *ngIf="formGroup.controls['mobile'].invalid && formGroup.controls['mobile'].touched"
+                        class="text-white">
+                        <div *ngIf="formGroup.controls['mobile'].errors?.['required']">Phone number is required.</div>
+                        <div *ngIf="formGroup.controls['mobile'].errors?.['pattern']">Enter a valid phone number.</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="field7" class="form-label">Email:</label>
+                    <input id="field7" class="form-control" formControlName="email" />
+                    <div *ngIf="formGroup.controls['email'].invalid && formGroup.controls['email'].touched"
+                        class="text-white">
+                        Phone number is required
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="field5" class="form-label">Age:</label>
+                    <input id="field5" class="form-control" formControlName="age" />
+                    <div *ngIf="formGroup.controls['age'].invalid && formGroup.controls['age'].touched"
+                        class="text-white">
+                        Age is Required
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="field6" class="form-label">Gender:</label>
+                    <select name="gender" class="form-control" id="gender" formControlName="gender">
+                        <option selected value="">Select the Gender</option>
+                        <option *ngFor="let gender of genderList" value="gender">{{gender}}</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="field3" class="form-label">Password:</label>
+                    <input id="field3" class="form-control" formControlName="password" type="password" />
+                    <div *ngIf="formGroup.controls['password'].invalid && formGroup.controls['password'].touched"
+                        class="text-white">
+                        Password is Required should be of minimum 8 Character
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="field4" class="form-label">Confirm Password:</label>
+                    <input id="field4" class="form-control" formControlName="confirmPassword" type="password" />
+                    <div *ngIf="formGroup.controls['confirmPassword'].invalid && formGroup.controls['confirmPassword'].touched"
+                        class="text-white">
+                        Confirm Password is Required
+                    </div>
+
+                    <div *ngIf=" formGroup.controls['confirmPassword'].touched && (formGroup.controls['password'].value !== formGroup.controls['confirmPassword'].value)"
+                        class="text-white">Password does not match</div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </section>

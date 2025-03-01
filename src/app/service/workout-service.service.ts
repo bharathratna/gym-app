@@ -10,6 +10,7 @@ import { Variation } from '../model/Variation';
 export class WorkoutServiceService {
 
   baseUrl = "http://localhost:1234/v1/api/workout";
+  userBaseUrl = "http://localhost:1234/v1/api/user"
   constructor(private http : HttpClient) { }
 
   
@@ -18,5 +19,12 @@ export class WorkoutServiceService {
   }
   getVariationList(workoutId: number): Observable<Variation[]>{
     return this.http.get<Variation[]>(this.baseUrl+"/variation?id="+workoutId)
+  }
+  getUserInfo(memberId: number): Observable<any> {
+    return this.http.get<any>(this.userBaseUrl+"/getUser?memberId="+memberId)
+  }
+
+  addWork(userId: number, workout: any[]): Observable<any> {
+    return this.http.post<{message: String}>(this.baseUrl+"/scheduleWorkOut?userId="+ userId, workout)
   }
 }

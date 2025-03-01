@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BMIRequest } from '../model/BMIRequest';
 import { client } from '../model/client';
+import { UserRequest } from '../model/UserRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,6 @@ export class StudentService {
     return this.http.post<Number>(this.gymBaseUrl+"/calculate", bmiRequest);
   }
 
-  register(client : client): Observable<number>{
-    return this.http.post<number>(this.gymBaseUrl+"/create", client);
-  }
+
   
 }

@@ -1,0 +1,65 @@
+.register{
+    padding-left: 300px;
+    padding-right: 300px;
+    
+}
+/* Speedometer Container */
+.speedometer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Speedometer (Semi-Circle) */
+.speedometer {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    background: conic-gradient(
+        #007bff 0deg 45deg,   /* Underweight - Blue */
+        #28a745 45deg 90deg,  /* Normal - Green */
+        #ffc107 90deg 135deg, /* Overweight - Yellow */
+        #dc3545 135deg 180deg /* Obese - Red */
+    );
+    border-radius: 100px 100px 0 0;
+    overflow: hidden;
+    border: 5px solid white;
+}
+
+/* Needle */
+.needle {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 4px;
+    height: 70px;
+    background: white;
+    transform-origin: bottom center;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Labels */
+.labels {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.label {
+    flex: 1;
+    text-align: center;
+    padding: 2px;
+}
+
+/* Category Colors */
+.underweight { color: #007bff; }  /* Blue */
+.normal { color: #28a745; }      /* Green */
+.overweight { color: #ffc107; }  /* Yellow */
+.obese { color: #dc3545; }       /* Red */

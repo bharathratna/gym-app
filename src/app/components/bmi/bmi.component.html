@@ -1,0 +1,29 @@
+<section id="register" class="py-5 px-4 bg-dark text-white">
+    <h2 class="h3 fw-bold text-center mb-4">Calculate BMI</h2>
+    <div class="container">
+       <div  class="register">
+        <form [formGroup] ="bmiForm" (ngSubmit)="onCalculate()" class="bg-secondary p-4 rounded">
+            <div class="mb-3">
+                <label for="field3" class="form-label">Weight:</label>
+                <input id="field3" class="form-control" formControlName="weight" />
+                <div *ngIf="bmiForm.controls['weight'].invalid && bmiForm.controls['weight'].touched" class="text-white">
+                    Please check the Weight
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="field4" class="form-label">Height:</label>
+                <input id="field4" class="form-control" formControlName="height" />
+                <div *ngIf="bmiForm.controls['height'].invalid && bmiForm.controls['height'].touched" class="text-white">
+                    Please check the Height
+                </div>
+            </div>
+            <div class="mb-3 text-center">
+                <button class="btn btn-warning" type="submit" [disabled]="bmiForm.invalid">CALCULATE</button>
+            </div>
+            <div *ngIf="bmiValue !== 0" class="text-center mt-4">
+                <h4 class="fw-bold">Your BMI: {{ bmiValue.toFixed(1) }}</h4>
+            </div>
+        </form>
+       </div>
+    </div>
+  </section>

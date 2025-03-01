@@ -1,0 +1,33 @@
+<section class  = "py-5 px-4 bg-dark text-white">
+    <div class="container">
+        <div *ngIf="workouts.length === 0">
+            <div><h3>No work Out is Scheduled for you !! Please contact your Trainer</h3></div>
+        </div>
+        <div class="container mt-4" *ngIf="workouts.length !== 0">
+            <table class="table table-bordered table-seondary text-white rounded">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Workout</th>
+                        <th>Set</th>
+                        <th>Reps</th>
+                        <th>Variation</th>
+                        <th>Reference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let workout of workouts">
+                        <td>{{ workout.day }}</td>
+                        <td>{{ workout.workout }}</td>
+                        <td>{{ workout.set }}</td>
+                        <td>{{ workout.reps }}</td>
+                        <td>{{ workout.variation }}</td>
+                        <td>
+                            <a [href]="workout.reference" target="_blank" class="text-warning">{{ workout.reference }}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+    </div>
+</section>

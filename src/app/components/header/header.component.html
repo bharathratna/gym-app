@@ -6,7 +6,12 @@
             <li class="nav-item"><a href="#about" class="nav-link text-white">About</a></li>
             <li class="nav-item"><a href="#services" class="nav-link text-white">Services</a></li>
             <li class="nav-item"><a href="#contact" class="nav-link text-white">Contact</a></li>
-            <li class="nav-item"><a href="schedule" class="nav-link text-white">Schedule</a></li>
+            <li class="nav-item"><a href="checkBmi" class="nav-link text-white">Check BMI</a></li>
+            <li class="nav-item"><a href="schedule" class="nav-link text-white" *ngIf="admin">Schedule</a></li>
+            <li class="nav-item"><a href="viewSchedule" class="nav-link text-white">View Schedule</a></li>
+            <li class="nav-item"><a href="login" class="nav-link text-white" *ngIf="!isLogin">Login</a></li>
+            <li class="nav-item"><a href="" class="nav-link text-white" *ngIf="isLogin" (click)="logout()">Logout</a></li>
+            
         </ul>
     </nav>
 </header>

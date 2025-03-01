@@ -1,73 +1,107 @@
 <section id="workout" class="py-5 px-4 bg-dark text-white">
-  <h2 class="h3 fw-bold text-center mb-4">Workout Table</h2>
-  <div class="container">
-      <button type="submit" (click)="addScheule()" class="btn btn-light mb-3">Schedule workout</button>
-      <div *ngIf="day !== 0">
-          <form [formGroup]="workOutGroup" (ngSubmit)="addWorkout()" class="bg-secondary p-4 rounded">
-              <div class="row mb-3">
-                  <div class="col-md-4">
-                      <label for="workoutType" class="form-label">Workout Type:</label>
-                      <select id="workoutType" class="form-control" formControlName="workoutType"
-                              (change)="selectVariation($event)" required>
-                          <option value="" disabled>Select a workout</option>
-                          <option *ngFor="let workout of workoutList" [value]="workout.workOutName">
-                              {{ workout.workOutName }}
-                          </option>
-                      </select>
-                  </div>
-                  <div class="col-md-2">
-                      <label class="form-label">Set:</label>
-                      <input type="number" formControlName="set" class="form-control" required  min = "0"/>
-                  </div>
-                  <div class="col-md-2">
-                      <label class="form-label">Reps:</label>
-                      <input type="number" formControlName="reps" class="form-control" required min = "0" />
-                  </div>
-                  <div class="col-md-4">
-                      <label for="variation" class="form-label">Select Variation:</label>
-                      <select id="variation" class="form-control" formControlName="variation" required>
-                          <option value="" disabled>Select a variation</option>
-                          <option *ngFor="let workout of selectedVariation" [value]="workout.variationName">
-                              {{ workout.variationName }}
-                          </option>
-                      </select>
-                  </div>
-              </div>
-              <div class="mb-3">
-                  <label class="form-label">Reference:</label>
-                  <input type="text" formControlName="reference" class="form-control" required />
-              </div>
-              <div class="text-center">
-                  <button type="submit" class="btn btn-warning">Add Workout</button>
-                  <button type="button" (click)="addScheule()" class="btn btn-light ms-3" [disabled]="nextday">Next Day</button>
-              </div>
-          </form>
-          <div class="container mt-4">
-            <table class="table table-bordered table-seondary text-white rounded">
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Workout</th>
-                        <th>Set</th>
-                        <th>Reps</th>
-                        <th>Variation</th>
-                        <th>Reference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let workout of workouts">
-                        <td>{{ workout.day }}</td>
-                        <td>{{ workout.workout }}</td>
-                        <td>{{ workout.set }}</td>
-                        <td>{{ workout.reps }}</td>
-                        <td>{{ workout.variation }}</td>
-                        <td>
-                            <a [href]="workout.reference" target="_blank" class="text-warning">{{ workout.reference }}</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="toast-container position-fixed top-0 start-50 p-3">
+        <div #toastElement class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-header">
+                <strong class="me-auto">Fitzone</strong>
+                <small class="text-muted">Registeration</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-dark">
+                <p>Scheduling work out for day {{this.day}}</p>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
+    <h2 class="h3 fw-bold text-center mb-4">Workout Table</h2>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <label class="form-label">Member Id:</label>
+                <input type="text" #memberId class="form-control" required min="0" (blur)="getUser(memberId)" />
+            </div>
+
+            <div class="col-md-4" *ngIf="userDetail.name !== null">
+                <label class="form-label">Name:</label>
+                <input type="text" class="form-control" [value]="userDetail.name" readonly />
+            </div>
+    
+            <div class="col-md-4"  *ngIf="userDetail.name !== null">
+                <label class="form-label">Mobile:</label>
+                <input type="text" class="form-control" [value]="userDetail.mobileNo" readonly />
+            </div>
+        </div>
+        
+        
+        <br/>
+        <button type="submit" (click)="addScheule()" class="btn btn-light mb-3"  *ngIf="userDetail.name !== null">Schedule workout</button>
+        <div *ngIf="day !== 0">
+            <form [formGroup]="workOutGroup" (ngSubmit)="addWorkout()" class="bg-secondary p-4 rounded">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="workoutType" class="form-label">Workout Type:</label>
+                        <select id="workoutType" class="form-control" formControlName="workoutType"
+                            (change)="selectVariation($event)" required>
+                            <option value="" disabled>Select a workout</option>
+                            <option *ngFor="let workout of workoutList" [value]="workout.workOutName">
+                                {{ workout.workOutName }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Set:</label>
+                        <input type="number" formControlName="set" class="form-control" required min="0" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Reps:</label>
+                        <input type="number" formControlName="reps" class="form-control" required min="0" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="variation" class="form-label">Select Variation:</label>
+                        <select id="variation" class="form-control" formControlName="variation" required>
+                            <option value="" disabled>Select a variation</option>
+                            <option *ngFor="let workout of selectedVariation" [value]="workout.variationName">
+                                {{ workout.variationName }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Reference:</label>
+                    <input type="text" formControlName="reference" class="form-control" required />
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-warning">Add Workout</button>
+                    <button type="button" (click)="addScheule()" class="btn btn-light ms-3" [disabled]="nextday">Next
+                        Day</button>
+                </div>
+            </form>
+            <div class="container mt-4">
+                <table class="table table-bordered table-seondary text-white rounded">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Workout</th>
+                            <th>Set</th>
+                            <th>Reps</th>
+                            <th>Variation</th>
+                            <th>Reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let workout of workouts">
+                            <td>{{ workout.day }}</td>
+                            <td>{{ workout.workout }}</td>
+                            <td>{{ workout.set }}</td>
+                            <td>{{ workout.reps }}</td>
+                            <td>{{ workout.variation }}</td>
+                            <td>
+                                <a [href]="workout.reference" target="_blank" class="text-warning">{{ workout.reference
+                                    }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button (click) ="addWorkOut()"  class="btn btn-warning">Schedule WorkOut</button>
+        </div>
+    </div>
 </section>
