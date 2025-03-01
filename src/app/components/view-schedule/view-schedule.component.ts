@@ -12,12 +12,16 @@ export class ViewScheduleComponent {
 
   workouts :any = []
 
+  username : string = '';
+
   constructor(private router : Router, private viewScheduleservice: ViewScheduleService) {
     if(localStorage.getItem('name') === null){
       this.router.navigate(['/login']);
     }
-
+    if(localStorage.getItem('name') !== null){
+      this.username = localStorage.getItem('name')!;
     this.getScheduleWorkOutList()
+    }
 
   }
 
